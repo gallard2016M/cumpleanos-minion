@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: hsl(44, 87%, 94%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #e34f77;
+            margin-bottom: 20px;
+        }
+
+        .flowers {
+            font-size: 50px;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #e34f77;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #d03f6e;
+        }
+
+        .gift-image {
+            width: 100px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .counter {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .time-box {
+            background-color: #e34f77;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            width: 60px;
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 18px;
+        }
+
+        .time-label {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Feliz Cumpleaños minion!</h1>
+        <div class="flowers">🌸🌼🌷🌹🌺</div>
+        <p>Que tu día esté lleno de alegría y sorpresas. Feliz día, no te imaginas lo feliz que me siento por ti. Gracias por compartir tu tiempo conmigo.</p>
+        <a href="#" id="receiveGiftButton" class="button" onclick="startCountdown()">Recibir Regalo</a>
+        <div id="countdown" class="counter"></div>
+        <div>
+            <img src="https://via.placeholder.com/100" alt="Regalo" class="gift-image">
+        </div>
+        <a href="https://darianchicomora.my.canva.site/te-amoo-minion" id="finalButton" class="button hidden">Ver Regalo</a>
+    </div>
+
+    <script>
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const button = document.getElementById('receiveGiftButton');
+            const finalButton = document.getElementById('finalButton');
+            
+            // Disable button after click
+            button.style.pointerEvents = 'none';
+            button.style.backgroundColor = '#b0b0b0'; // Change color to indicate disabled state
+
+            // Set countdown duration (6 hours)
+            const duration = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+            const endTime = Date.now() + duration;
+
+            function updateCountdown() {
+                const now = Date.now();
+                const timeLeft = endTime - now;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    countdownElement.innerHTML = '<div class="time-box"><span>00</span><div class="time-label">Horas</div></div><div class="time-box"><span>00</span><div class="time-label">Minutos</div></div><div class="time-box"><span>00</span><div class="time-label">Segundos</div></div>';
+                    alert('¡El tiempo ha terminado! Puedes ver tu regalo ahora.');
+                    finalButton.classList.remove('hidden');
+                    return;
+                }
+
+                const hours = Math.floor((timeLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
+
+                countdownElement.innerHTML = `
+                    <div class="countdown">
+                        <div class="time-box">
+                            <span>${String(hours).padStart(2, '0')}</span>
+                            <div class="time-label">Horas</div>
+                        </div>
+                        <div class="time-box">
+                            <span>${String(minutes).padStart(2, '0')}</span>
+                            <div class="time-label">Minutos</div>
+                        </div>
+                        <div class="time-box">
+                            <span>${String(seconds).padStart(2, '0')}</span>
+                            <div class="time-label">Segundos</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const timerInterval = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+    </script>
+</body>
+</html>
